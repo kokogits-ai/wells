@@ -1,0 +1,5 @@
+{
+  "name": "Wells Fargo Replica",
+  "description": "A replica of the Wells Fargo mobile banking interface with a dummy login.",
+  "requestFramePermissions": []
+}
