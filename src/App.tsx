@@ -46,6 +46,7 @@ interface Account {
   id: string;
   type: string;
   number: string;
+  routingNumber?: string;
   balance: number;
   transactions: Transaction[];
 }
@@ -56,31 +57,48 @@ type View = 'home' | 'accounts' | 'transfer' | 'deposit' | 'profile' | 'menu' | 
 const MOCK_ACCOUNTS: Account[] = [
   {
     id: '1',
-    type: "Eva's Checking",
-    number: '...9560',
+    type: "Eva D. Lotts's Checking",
+    number: '10762367',
+    routingNumber: '321270742',
     balance: 4200000.00,
     transactions: [
-      { id: '1', date: '2026-02-21', description: 'Wire Transfer – Morgan Holdings LLC', amount: 450000.00, type: 'debit', status: 'posted' },
-      { id: '2', date: '2026-02-20', description: 'Incoming Wire – Apex Capital', amount: 1200000.00, type: 'credit', status: 'posted' },
-      { id: '3', date: '2026-02-19', description: 'ACH Payment – Property Tax', amount: 75000.00, type: 'debit', status: 'posted' },
-      { id: '4', date: '2026-02-18', description: 'Dividend Payment – Vanguard Fund', amount: 320500.00, type: 'credit', status: 'posted' },
-      { id: '5', date: '2026-02-17', description: 'International Transfer – UK Vendor', amount: 210750.00, type: 'debit', status: 'posted' },
-      { id: '6', date: '2026-02-15', description: 'Incoming Wire – Real Estate Sale', amount: 3850000.00, type: 'credit', status: 'posted' },
-      { id: '7', date: '2026-02-14', description: 'Credit Card Payment', amount: 45200.00, type: 'debit', status: 'posted' },
-      { id: '8', date: '2026-02-12', description: 'Payroll Deposit – Executive Compensation', amount: 250000.00, type: 'credit', status: 'posted' },
-      { id: '9', date: '2026-02-10', description: 'Investment Purchase – Tech Fund', amount: 1000000.00, type: 'debit', status: 'posted' },
-      { id: '10', date: '2026-02-09', description: 'ATM Withdrawal – Private Banking', amount: 10000.00, type: 'debit', status: 'posted' },
-      { id: '11', date: '2026-02-07', description: 'Interest Earned', amount: 18750.00, type: 'credit', status: 'posted' },
-      { id: '12', date: '2026-02-05', description: 'Wire Transfer – Dubai Holdings', amount: 600000.00, type: 'debit', status: 'posted' },
-      { id: '13', date: '2026-02-03', description: 'Incoming Wire – Consulting Fee', amount: 480000.00, type: 'credit', status: 'posted' },
-      { id: '14', date: '2026-02-02', description: 'Luxury Auto Payment', amount: 220000.00, type: 'debit', status: 'posted' },
-      { id: '15', date: '2026-02-01', description: 'Investment Dividend – Energy Fund', amount: 150000.00, type: 'credit', status: 'posted' }
+      { id: '1', date: '2020-12-21', description: 'Wire Transfer – Morgan Holdings LLC', amount: 450000.00, type: 'debit', status: 'posted' },
+      { id: '2', date: '2020-11-20', description: 'Incoming Wire – Apex Capital', amount: 1200000.00, type: 'credit', status: 'posted' },
+      { id: '3', date: '2020-10-19', description: 'ACH Payment – Property Tax', amount: 75000.00, type: 'debit', status: 'posted' },
+      { id: '4', date: '2020-09-18', description: 'Dividend Payment – Vanguard Fund', amount: 320500.00, type: 'credit', status: 'posted' },
+      { id: '5', date: '2020-08-17', description: 'International Transfer – UK Vendor', amount: 210750.00, type: 'debit', status: 'posted' },
+      { id: '6', date: '2020-07-15', description: 'Incoming Wire – Real Estate Sale', amount: 3850000.00, type: 'credit', status: 'posted' },
+      { id: '7', date: '2020-06-14', description: 'Credit Card Payment', amount: 45200.00, type: 'debit', status: 'posted' },
+      { id: '8', date: '2020-05-12', description: 'Payroll Deposit – Executive Compensation', amount: 250000.00, type: 'credit', status: 'posted' },
+      { id: '9', date: '2020-04-10', description: 'Investment Purchase – Tech Fund', amount: 1000000.00, type: 'debit', status: 'posted' },
+      { id: '10', date: '2020-03-09', description: 'ATM Withdrawal – Private Banking', amount: 10000.00, type: 'debit', status: 'posted' },
+      { id: '11', date: '2020-02-07', description: 'Interest Earned', amount: 18750.00, type: 'credit', status: 'posted' },
+      { id: '12', date: '2020-01-05', description: 'Wire Transfer – Dubai Holdings', amount: 600000.00, type: 'debit', status: 'posted' },
+      { id: '13', date: '2019-12-03', description: 'Incoming Wire – Consulting Fee', amount: 480000.00, type: 'credit', status: 'posted' },
+      { id: '14', date: '2019-11-02', description: 'Luxury Auto Payment', amount: 220000.00, type: 'debit', status: 'posted' },
+      { id: '15', date: '2019-10-01', description: 'Investment Dividend – Energy Fund', amount: 150000.00, type: 'credit', status: 'posted' },
+      { id: '16', date: '2019-09-15', description: 'Office Lease Payment', amount: 15000.00, type: 'debit', status: 'posted' },
+      { id: '17', date: '2019-08-20', description: 'Client Payment – Global Tech', amount: 85000.00, type: 'credit', status: 'posted' },
+      { id: '18', date: '2019-07-12', description: 'Travel Expense – London', amount: 12400.00, type: 'debit', status: 'posted' },
+      { id: '19', date: '2019-06-05', description: 'Stock Sale – Apple Inc', amount: 250000.00, type: 'credit', status: 'posted' },
+      { id: '20', date: '2019-05-22', description: 'Insurance Premium', amount: 8500.00, type: 'debit', status: 'posted' },
+      { id: '21', date: '2019-04-18', description: 'Bonus Deposit', amount: 120000.00, type: 'credit', status: 'posted' },
+      { id: '22', date: '2019-03-10', description: 'Legal Fees', amount: 45000.00, type: 'debit', status: 'posted' },
+      { id: '23', date: '2019-02-25', description: 'Rental Income', amount: 12500.00, type: 'credit', status: 'posted' },
+      { id: '24', date: '2019-01-15', description: 'Charity Donation', amount: 50000.00, type: 'debit', status: 'posted' },
+      { id: '25', date: '2019-12-28', description: 'Consulting Revenue', amount: 95000.00, type: 'credit', status: 'posted' },
+      { id: '26', date: '2019-11-14', description: 'Utility Payment', amount: 2300.00, type: 'debit', status: 'posted' },
+      { id: '27', date: '2019-10-20', description: 'Tax Refund', amount: 18400.00, type: 'credit', status: 'posted' },
+      { id: '28', date: '2019-09-05', description: 'Software Subscription', amount: 1200.00, type: 'debit', status: 'posted' },
+      { id: '29', date: '2019-08-01', description: 'Asset Purchase', amount: 300000.00, type: 'debit', status: 'posted' },
+      { id: '30', date: '2019-07-15', description: 'Interest Income', amount: 5600.00, type: 'credit', status: 'posted' }
     ]
   },
   {
     id: '2',
     type: 'BUSINESS MARKET RATE SAVINGS',
     number: '...2286',
+    routingNumber: '321270742',
     balance: 822250.08,
     transactions: [
       { id: 't4', date: 'Feb 01', description: 'Interest Payment', amount: 342.12, type: 'credit', status: 'posted' },
@@ -90,6 +108,7 @@ const MOCK_ACCOUNTS: Account[] = [
     id: '3',
     type: 'CHECKING',
     number: '...3813',
+    routingNumber: '321270742',
     balance: 2844824.33,
     transactions: [
       { id: 't5', date: 'Feb 22', description: 'Whole Foods Market', amount: 84.12, type: 'debit', status: 'posted' },
@@ -100,11 +119,12 @@ const MOCK_ACCOUNTS: Account[] = [
 ];
 
 const USER_PROFILE = {
-  fullName: 'Eva Dlotts',
-  email: 'evadavis38@gmail.com',
+  fullName: 'Eva D. Lotts',
+  email: 'evaddavis38@gmail.com',
   phone: '+12293389560',
   address: '925 west gordon ave albany ga 31701',
-  accountNumber: '12345678',
+  accountNumber: '10762367',
+  routingNumber: '321270742',
   sex: 'Female'
 };
 
@@ -128,7 +148,7 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Designated credentials
-    if (accountNumber === '170432158' && password === 'Eva2026!') {
+    if (accountNumber === '10762367' && password === 'Eva2026!') {
       onLogin();
     } else {
       setError('Invalid account number or password. Please try again.');
@@ -222,7 +242,7 @@ const HomePage = ({ account, onMenuClick, onTransferClick }: { account: Account,
       {/* Account Info */}
       <div className="text-center py-6 border-b border-gray-100">
         <h2 className="text-[#8C1B1B] font-serif text-2xl">{account.type}</h2>
-        <p className="text-gray-500 text-sm mt-1">{account.number}</p>
+        <p className="text-gray-500 text-sm mt-1">Account: {account.number} • Routing: {account.routingNumber}</p>
       </div>
 
       {/* Quick Actions */}
@@ -448,6 +468,15 @@ const ProfilePage = ({ onBack }: { onBack: () => void }) => {
             </div>
             <div className="flex items-start space-x-4">
               <div className="p-2 bg-gray-50 rounded-lg">
+                <ShieldCheck className="h-5 w-5 text-gray-400" />
+              </div>
+              <div>
+                <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Routing Number</p>
+                <p className="text-gray-800 font-bold">{USER_PROFILE.routingNumber}</p>
+              </div>
+            </div>
+            <div className="flex items-start space-x-4">
+              <div className="p-2 bg-gray-50 rounded-lg">
                 <MapPin className="h-5 w-5 text-gray-400" />
               </div>
               <div>
@@ -534,7 +563,7 @@ const AccountDetails = ({ account, onBack }: { account: Account, onBack: () => v
 
       <div className="p-8 bg-white border-b border-gray-200">
         <h2 className="text-[#8C1B1B] font-bold text-2xl uppercase tracking-wide leading-tight">{account.type}</h2>
-        <p className="text-gray-500 text-sm font-medium mt-1">{account.number}</p>
+        <p className="text-gray-500 text-sm font-medium mt-1">Account: {account.number} • Routing: {account.routingNumber}</p>
         <div className="mt-8">
           <p className="text-gray-400 text-[10px] uppercase font-bold tracking-widest">Available Balance</p>
           <p className="text-5xl font-bold text-gray-900 mt-2 tracking-tighter">${account.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
