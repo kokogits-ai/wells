@@ -56,9 +56,9 @@ type View = 'home' | 'accounts' | 'transfer' | 'deposit' | 'profile' | 'menu' | 
 const MOCK_ACCOUNTS: Account[] = [
   {
     id: '1',
-    type: "Pat's Checking",
-    number: '...0353',
-    balance: 25000000.00,
+    type: "Eva's Checking",
+    number: '...9560',
+    balance: 4200000.00,
     transactions: [
       { id: '1', date: '2026-02-21', description: 'Wire Transfer – Morgan Holdings LLC', amount: 450000.00, type: 'debit', status: 'posted' },
       { id: '2', date: '2026-02-20', description: 'Incoming Wire – Apex Capital', amount: 1200000.00, type: 'credit', status: 'posted' },
@@ -100,31 +100,45 @@ const MOCK_ACCOUNTS: Account[] = [
 ];
 
 const USER_PROFILE = {
-  fullName: 'Pat Smith',
-  email: 'pat.smith@example.com',
-  phone: '+1 (555) 123-4567',
-  address: '55 California St, San Francisco, CA 94111',
-  accountNumber: '1234567890'
+  fullName: 'Eva Dlotts',
+  email: 'evadavis38@gmail.com',
+  phone: '+12293389560',
+  address: '925 west gordon ave albany ga 31701',
+  accountNumber: '12345678',
+  sex: 'Female'
 };
 
 // --- Components ---
+
+const MOCK_BANKS = [
+  "JPMorgan Chase", "Bank of America", "Citigroup", "Wells Fargo", "Goldman Sachs",
+  "Morgan Stanley", "U.S. Bancorp", "PNC Financial Services", "Truist Financial",
+  "Charles Schwab", "TD Bank", "Capital One", "BNY Mellon", "State Street",
+  "American Express", "Citizens Financial Group", "Fifth Third Bank", "KeyCorp",
+  "Huntington Bancshares", "Regions Financial Corporation", "Northern Trust",
+  "M&T Bank", "Discover Financial", "Ally Financial", "Santander Bank"
+];
 
 const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const [accountNumber, setAccountNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (accountNumber && password) {
+    // Designated credentials
+    if (accountNumber === '170432158' && password === 'Eva2026!') {
       onLogin();
+    } else {
+      setError('Invalid account number or password. Please try again.');
     }
   };
 
   return (
     <div className="min-h-screen bg-[#D71E28] flex flex-col items-center justify-center px-6 font-sans">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-2xl">
-        <div className="flex justify-center mb-10">
+        <div className="flex flex-col items-center justify-center mb-10">
           <h1 className="text-[#D71E28] text-4xl font-serif font-bold tracking-tight">WELLS FARGO</h1>
         </div>
 
@@ -172,8 +186,9 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
             type="submit"
             className="w-full flex justify-center py-4 px-4 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-[#D71E28] hover:bg-[#b01821] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#D71E28] transition-colors"
           >
-            Sign On
+            Login
           </button>
+          {error && <p className="text-red-600 text-xs text-center font-bold">{error}</p>}
         </form>
         
         <div className="mt-8 pt-6 border-t border-gray-100 flex justify-between text-xs font-bold text-[#004B87]">
@@ -192,12 +207,16 @@ const HomePage = ({ account, onMenuClick, onTransferClick }: { account: Account,
   return (
     <div className="min-h-screen bg-white font-sans pb-20">
       {/* Header */}
-      <header className="bg-[#D71E28] text-white py-3 px-4 flex justify-between items-center sticky top-0 z-10">
-        <div className="w-8" /> {/* Spacer */}
-        <h1 className="text-lg font-serif font-bold tracking-widest">WELLS FARGO</h1>
-        <button onClick={onMenuClick}>
-          <Menu className="h-6 w-6" />
-        </button>
+      <header className="bg-[#D71E28] text-white py-4 px-4 flex flex-col items-center sticky top-0 z-10 shadow-lg">
+        <div className="w-full flex justify-between items-center">
+          <div className="w-8" /> {/* Spacer */}
+          <div className="flex flex-col items-center">
+            <h1 className="text-lg font-serif font-bold tracking-widest">WELLS FARGO</h1>
+          </div>
+          <button onClick={onMenuClick}>
+            <Menu className="h-6 w-6" />
+          </button>
+        </div>
       </header>
 
       {/* Account Info */}
@@ -360,7 +379,7 @@ const MenuPage = ({ onNavigate, onLogout }: { onNavigate: (v: View) => void, onL
           className="w-full flex items-center justify-center space-x-2 p-4 bg-white border border-gray-200 rounded-md text-red-600 font-bold shadow-sm"
         >
           <LogOut className="h-5 w-5" />
-          <span>Sign Off</span>
+          <span>Log Out</span>
         </button>
       </div>
     </div>
@@ -386,6 +405,13 @@ const ProfilePage = ({ onBack }: { onBack: () => void }) => {
             <p className="text-white/70 text-sm">Member since 2018</p>
           </div>
           <div className="p-6 space-y-6">
+            <div className="flex items-start space-x-4">
+              <User className="h-5 w-5 text-gray-400 mt-1" />
+              <div>
+                <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Gender</p>
+                <p className="text-gray-800 font-medium">{USER_PROFILE.sex}</p>
+              </div>
+            </div>
             <div className="flex items-start space-x-4">
               <Mail className="h-5 w-5 text-gray-400 mt-1" />
               <div>
@@ -541,6 +567,7 @@ const TransferFlow = ({ accounts, onComplete, onCancel }: { accounts: Account[],
   const [step, setStep] = useState<'details' | 'verify' | 'success'>('details');
   const [fromAccount, setFromAccount] = useState(accounts[0].id);
   const [toAccount, setToAccount] = useState('');
+  const [selectedBank, setSelectedBank] = useState(MOCK_BANKS[0]);
   const [amount, setAmount] = useState('');
   const [authCode, setAuthCode] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
@@ -562,22 +589,64 @@ const TransferFlow = ({ accounts, onComplete, onCancel }: { accounts: Account[],
 
   if (step === 'success') {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center">
-        <motion.div 
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="bg-green-50 p-6 rounded-full mb-6"
-        >
-          <CheckCircle2 className="h-16 w-16 text-green-600" />
-        </motion.div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Transfer Successful</h2>
-        <p className="text-gray-500 mb-8">Your transfer of ${parseFloat(amount).toLocaleString()} has been processed.</p>
-        <button 
-          onClick={onCancel}
-          className="w-full py-3 bg-[#D71E28] text-white rounded-md font-bold"
-        >
-          Back to Dashboard
-        </button>
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6 font-sans">
+        <div className="w-full max-w-md bg-white shadow-xl rounded-lg overflow-hidden border border-gray-200">
+          <div className="bg-[#D71E28] p-6 text-center text-white">
+            <h2 className="text-xl font-serif font-bold tracking-widest">WELLS FARGO</h2>
+            <p className="text-xs mt-1 opacity-80 uppercase tracking-widest">Transaction Receipt</p>
+          </div>
+          
+          <div className="p-8 space-y-6">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-yellow-50 rounded-full mb-3">
+                <div className="w-3 h-3 bg-yellow-500 rounded-full animate-pulse" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900">Transaction Pending</h3>
+              <p className="text-sm text-gray-500">Your transfer is being processed and will appear in your history shortly.</p>
+            </div>
+
+            <div className="border-t border-b border-dashed border-gray-200 py-6 space-y-4">
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">Amount</span>
+                <span className="font-bold text-gray-900">${parseFloat(amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">From Account</span>
+                <span className="font-medium text-gray-900">{accounts.find(a => a.id === fromAccount)?.type}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">To Recipient</span>
+                <span className="font-medium text-gray-900">{toAccount} ({selectedBank})</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">Date</span>
+                <span className="font-medium text-gray-900">{new Date().toLocaleDateString()}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-500">Reference Number</span>
+                <span className="font-mono text-gray-900">WF-{Math.floor(Math.random() * 100000000)}</span>
+              </div>
+            </div>
+
+            <div className="bg-blue-50 p-4 rounded-md border border-blue-100">
+              <p className="text-[10px] text-blue-800 leading-relaxed">
+                Notice: This transaction is currently pending verification. Funds may be held for up to 24 hours depending on the recipient's bank policies.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-6 bg-gray-50 border-t border-gray-100">
+            <button 
+              onClick={onCancel}
+              className="w-full py-4 bg-[#D71E28] text-white rounded-md font-bold shadow-md hover:bg-[#b01821] transition-colors"
+            >
+              Done
+            </button>
+          </div>
+        </div>
+        <p className="mt-8 text-gray-400 text-[10px] text-center max-w-xs">
+          Wells Fargo Bank, N.A. Member FDIC.
+        </p>
       </div>
     );
   }
@@ -605,6 +674,18 @@ const TransferFlow = ({ accounts, onComplete, onCancel }: { accounts: Account[],
               >
                 {accounts.map(a => (
                   <option key={a.id} value={a.id}>{a.type} ({a.number})</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Recipient Bank</label>
+              <select 
+                className="w-full p-3 border border-gray-300 rounded-md bg-white"
+                value={selectedBank}
+                onChange={(e) => setSelectedBank(e.target.value)}
+              >
+                {MOCK_BANKS.map(bank => (
+                  <option key={bank} value={bank}>{bank}</option>
                 ))}
               </select>
             </div>
