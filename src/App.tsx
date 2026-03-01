@@ -137,7 +137,7 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
 
   return (
     <div className="min-h-screen bg-[#D71E28] flex flex-col items-center justify-center px-6 font-sans">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-2xl">
+      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-2xl">
         <div className="flex flex-col items-center justify-center mb-10">
           <h1 className="text-[#D71E28] text-4xl font-serif font-bold tracking-tight">WELLS FARGO</h1>
         </div>
@@ -205,15 +205,15 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
 
 const HomePage = ({ account, onMenuClick, onTransferClick }: { account: Account, onMenuClick: () => void, onTransferClick: () => void }) => {
   return (
-    <div className="min-h-screen bg-white font-sans pb-20">
-      {/* Header */}
-      <header className="bg-[#D71E28] text-white py-4 px-4 flex flex-col items-center sticky top-0 z-10 shadow-lg">
+    <div className="min-h-screen bg-white font-sans pb-20 sm:pb-10 sm:rounded-2xl sm:shadow-xl sm:overflow-hidden">
+      {/* Header (Mobile Only) */}
+      <header className="sm:hidden bg-[#D71E28] text-white py-4 px-4 flex flex-col items-center sticky top-0 z-30 shadow-lg">
         <div className="w-full flex justify-between items-center">
           <div className="w-8" /> {/* Spacer */}
           <div className="flex flex-col items-center">
             <h1 className="text-lg font-serif font-bold tracking-widest">WELLS FARGO</h1>
           </div>
-          <button onClick={onMenuClick}>
+          <button onClick={onMenuClick} className="p-1 active:bg-white/10 rounded-md transition-colors">
             <Menu className="h-6 w-6" />
           </button>
         </div>
@@ -226,39 +226,42 @@ const HomePage = ({ account, onMenuClick, onTransferClick }: { account: Account,
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-4 gap-2 px-4 py-6 border-b border-gray-100">
+      <div className="grid grid-cols-4 gap-4 px-6 py-8 border-b border-gray-100">
         <div className="flex flex-col items-center space-y-2">
-          <div className="p-3 border border-gray-200 rounded-md text-[#004B87]">
+          <div className="w-14 h-14 flex items-center justify-center bg-red-50 rounded-2xl text-[#D71E28] shadow-sm active:scale-95 transition-transform">
             <CreditCard className="h-6 w-6" />
           </div>
-          <span className="text-[10px] text-center font-medium text-[#004B87]">Pay Bills</span>
+          <span className="text-[10px] text-center font-bold text-gray-600 uppercase tracking-tighter">Pay Bills</span>
         </div>
         <div className="flex flex-col items-center space-y-2">
-          <div className="p-3 border border-gray-200 rounded-md text-[#004B87]">
+          <div className="w-14 h-14 flex items-center justify-center bg-red-50 rounded-2xl text-[#D71E28] shadow-sm active:scale-95 transition-transform">
             <ArrowUpFromLine className="h-6 w-6" />
           </div>
-          <span className="text-[10px] text-center font-medium text-[#004B87]">Deposit Check</span>
+          <span className="text-[10px] text-center font-bold text-gray-600 uppercase tracking-tighter">Deposit</span>
         </div>
         <button onClick={onTransferClick} className="flex flex-col items-center space-y-2">
-          <div className="p-3 border border-gray-200 rounded-md text-[#004B87]">
+          <div className="w-14 h-14 flex items-center justify-center bg-red-50 rounded-2xl text-[#D71E28] shadow-sm active:scale-95 transition-transform">
             <ArrowRightLeft className="h-6 w-6" />
           </div>
-          <span className="text-[10px] text-center font-medium text-[#004B87]">Transfer Money</span>
+          <span className="text-[10px] text-center font-bold text-gray-600 uppercase tracking-tighter">Transfer</span>
         </button>
         <button onClick={onTransferClick} className="flex flex-col items-center space-y-2">
-          <div className="p-3 border border-gray-200 rounded-md text-[#004B87]">
+          <div className="w-14 h-14 flex items-center justify-center bg-red-50 rounded-2xl text-[#D71E28] shadow-sm active:scale-95 transition-transform">
             <ArrowUpRight className="h-6 w-6" />
           </div>
-          <span className="text-[10px] text-center font-medium text-[#004B87]">Send Money</span>
+          <span className="text-[10px] text-center font-bold text-gray-600 uppercase tracking-tighter">Send</span>
         </button>
       </div>
 
       {/* Balance Section */}
-      <div className="px-6 py-4 flex justify-between items-center border-b border-gray-100">
-        <span className="text-sm text-gray-600">Available balance</span>
-        <span className="text-xl font-bold text-gray-900">
-          ${account.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-        </span>
+      <div className="px-8 py-8 flex justify-between items-center border-b border-gray-100 bg-gray-50/50">
+        <div>
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Available balance</span>
+          <div className="text-4xl font-bold text-gray-900 mt-1 tracking-tighter">
+            ${account.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+          </div>
+        </div>
+        <ChevronRight className="h-6 w-6 text-gray-300" />
       </div>
       <div className="px-6 py-3 text-center border-b border-gray-200">
         <button className="text-[#004B87] text-sm font-medium">Show Balance Details</button>
@@ -279,21 +282,21 @@ const HomePage = ({ account, onMenuClick, onTransferClick }: { account: Account,
 
       {/* Transaction List */}
       <div className="bg-white">
-        <div className="px-6 py-2 bg-gray-50 border-b border-gray-200">
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Transactions</span>
+        <div className="px-8 py-4 bg-gray-50 border-b border-gray-100">
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Recent Activity</span>
         </div>
         {account.transactions.map(tx => (
-          <div key={tx.id} className="px-6 py-4 border-b border-gray-100 flex justify-between items-start">
-            <div className="flex space-x-3">
-              <div className="mt-1 p-1 border border-gray-300 rounded-full">
-                <PlusCircle className={`h-3 w-3 ${tx.type === 'credit' ? 'text-green-500' : 'text-gray-300'}`} />
+          <div key={tx.id} className="px-8 py-5 border-b border-gray-50 flex justify-between items-center active:bg-gray-50 transition-colors">
+            <div className="flex items-center space-x-4">
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${tx.type === 'credit' ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-400'}`}>
+                {tx.type === 'credit' ? <ArrowDownLeft className="h-5 w-5" /> : <ArrowUpRight className="h-5 w-5" />}
               </div>
-              <div className="max-w-[200px]">
-                <p className="text-xs font-bold text-gray-800 leading-tight uppercase">{tx.description}</p>
-                <p className="text-[10px] text-gray-500 mt-1">{tx.date}</p>
+              <div className="max-w-[180px]">
+                <p className="text-xs font-bold text-gray-800 leading-tight uppercase tracking-tight">{tx.description}</p>
+                <p className="text-[10px] text-gray-400 font-medium mt-1 uppercase tracking-wider">{tx.date}</p>
               </div>
             </div>
-            <p className={`text-sm font-bold ${tx.type === 'credit' ? 'text-green-700' : 'text-gray-900'}`}>
+            <p className={`text-sm font-bold ${tx.type === 'credit' ? 'text-green-600' : 'text-gray-900'}`}>
               {tx.type === 'credit' ? '+' : '-'}${tx.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
             </p>
           </div>
@@ -312,8 +315,8 @@ const HomePage = ({ account, onMenuClick, onTransferClick }: { account: Account,
 
 const AccountsPage = ({ accounts, onSelectAccount }: { accounts: Account[], onSelectAccount: (a: Account) => void }) => {
   return (
-    <div className="min-h-screen bg-[#FDFDFD] pb-20 font-sans">
-      <header className="bg-[#D71E28] text-white py-3 px-4 flex justify-center items-center sticky top-0 z-10 shadow-md">
+    <div className="min-h-screen bg-[#FDFDFD] pb-20 sm:pb-10 font-sans sm:rounded-2xl sm:shadow-xl sm:overflow-hidden">
+      <header className="bg-[#D71E28] text-white py-4 px-4 flex justify-center items-center sticky top-0 z-30 shadow-md">
         <h1 className="text-xl font-serif font-bold tracking-widest">ACCOUNTS</h1>
       </header>
       <div className="flex flex-col">
@@ -321,22 +324,22 @@ const AccountsPage = ({ accounts, onSelectAccount }: { accounts: Account[], onSe
           <button 
             key={account.id} 
             onClick={() => onSelectAccount(account)}
-            className="bg-white border-b border-gray-100 p-5 relative text-left active:bg-gray-50 transition-colors"
+            className="bg-white border-b border-gray-100 p-6 relative text-left active:bg-gray-50 transition-colors"
           >
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-[#8C1B1B] font-semibold text-lg leading-tight uppercase tracking-wide">
+                <h2 className="text-[#8C1B1B] font-bold text-lg leading-tight uppercase tracking-wide">
                   {account.type}
                 </h2>
                 <p className="text-gray-500 text-sm mt-1">{account.number}</p>
               </div>
-              <MoreVertical className="h-6 w-6 text-gray-400" />
+              <ChevronRight className="h-6 w-6 text-gray-300" />
             </div>
             <div className="mt-4 flex flex-col items-end">
               <span className="text-2xl font-bold text-gray-900">
                 ${account.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </span>
-              <span className="text-gray-500 text-xs mt-1">Available balance</span>
+              <span className="text-gray-500 text-xs mt-1 font-bold uppercase tracking-wider">Available balance</span>
             </div>
           </button>
         ))}
@@ -354,8 +357,8 @@ const MenuPage = ({ onNavigate, onLogout }: { onNavigate: (v: View) => void, onL
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
-      <header className="bg-[#D71E28] text-white py-4 px-6 flex items-center">
+    <div className="min-h-screen bg-gray-50 font-sans sm:rounded-2xl sm:shadow-xl sm:overflow-hidden">
+      <header className="bg-[#D71E28] text-white py-5 px-6 flex items-center sticky top-0 z-30 shadow-md">
         <h1 className="text-xl font-serif font-bold tracking-widest">MENU</h1>
       </header>
       <div className="mt-4 bg-white border-y border-gray-200">
@@ -363,11 +366,13 @@ const MenuPage = ({ onNavigate, onLogout }: { onNavigate: (v: View) => void, onL
           <button 
             key={idx}
             onClick={() => onNavigate(item.view)}
-            className="w-full flex items-center justify-between p-4 border-b border-gray-100 last:border-0 active:bg-gray-50"
+            className="w-full flex items-center justify-between p-5 border-b border-gray-100 last:border-0 active:bg-gray-50 transition-colors"
           >
             <div className="flex items-center space-x-4">
-              <item.icon className="h-5 w-5 text-[#D71E28]" />
-              <span className="text-gray-800 font-medium">{item.label}</span>
+              <div className="p-2 bg-red-50 rounded-lg">
+                <item.icon className="h-5 w-5 text-[#D71E28]" />
+              </div>
+              <span className="text-gray-800 font-bold text-sm uppercase tracking-wide">{item.label}</span>
             </div>
             <ChevronRight className="h-5 w-5 text-gray-300" />
           </button>
@@ -376,7 +381,7 @@ const MenuPage = ({ onNavigate, onLogout }: { onNavigate: (v: View) => void, onL
       <div className="mt-8 px-6">
         <button 
           onClick={onLogout}
-          className="w-full flex items-center justify-center space-x-2 p-4 bg-white border border-gray-200 rounded-md text-red-600 font-bold shadow-sm"
+          className="w-full flex items-center justify-center space-x-2 p-5 bg-white border-2 border-red-100 rounded-xl text-red-600 font-bold shadow-sm active:bg-red-50 transition-colors"
         >
           <LogOut className="h-5 w-5" />
           <span>Log Out</span>
@@ -388,56 +393,66 @@ const MenuPage = ({ onNavigate, onLogout }: { onNavigate: (v: View) => void, onL
 
 const ProfilePage = ({ onBack }: { onBack: () => void }) => {
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
-      <header className="bg-[#D71E28] text-white py-3 px-4 flex items-center sticky top-0 z-10">
-        <button onClick={onBack} className="absolute left-4">
+    <div className="min-h-screen bg-gray-50 font-sans sm:rounded-2xl sm:shadow-xl sm:overflow-hidden">
+      <header className="bg-[#D71E28] text-white py-4 px-4 flex items-center sticky top-0 z-30 shadow-md">
+        <button onClick={onBack} className="absolute left-4 p-1 active:bg-white/10 rounded-md transition-colors">
           <ChevronLeft className="h-6 w-6" />
         </button>
         <h1 className="w-full text-center text-lg font-serif font-bold tracking-widest">PROFILE</h1>
       </header>
-      <div className="p-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="bg-[#8C1B1B] p-6 text-white text-center">
-            <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <User className="h-10 w-10 text-white" />
+      <div className="p-4">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="bg-[#8C1B1B] p-8 text-white text-center">
+            <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-white/10">
+              <User className="h-12 w-12 text-white" />
             </div>
-            <h2 className="text-xl font-bold">{USER_PROFILE.fullName}</h2>
-            <p className="text-white/70 text-sm">Member since 2018</p>
+            <h2 className="text-2xl font-bold">{USER_PROFILE.fullName}</h2>
+            <p className="text-white/70 text-sm font-medium">Member since 2018</p>
           </div>
-          <div className="p-6 space-y-6">
+          <div className="p-6 space-y-8">
             <div className="flex items-start space-x-4">
-              <User className="h-5 w-5 text-gray-400 mt-1" />
+              <div className="p-2 bg-gray-50 rounded-lg">
+                <User className="h-5 w-5 text-gray-400" />
+              </div>
               <div>
-                <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Gender</p>
-                <p className="text-gray-800 font-medium">{USER_PROFILE.sex}</p>
+                <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Gender</p>
+                <p className="text-gray-800 font-bold">{USER_PROFILE.sex}</p>
               </div>
             </div>
             <div className="flex items-start space-x-4">
-              <Mail className="h-5 w-5 text-gray-400 mt-1" />
+              <div className="p-2 bg-gray-50 rounded-lg">
+                <Mail className="h-5 w-5 text-gray-400" />
+              </div>
               <div>
-                <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Email Address</p>
-                <p className="text-gray-800 font-medium">{USER_PROFILE.email}</p>
+                <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Email Address</p>
+                <p className="text-gray-800 font-bold">{USER_PROFILE.email}</p>
               </div>
             </div>
             <div className="flex items-start space-x-4">
-              <Phone className="h-5 w-5 text-gray-400 mt-1" />
+              <div className="p-2 bg-gray-50 rounded-lg">
+                <Phone className="h-5 w-5 text-gray-400" />
+              </div>
               <div>
-                <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Phone Number</p>
-                <p className="text-gray-800 font-medium">{USER_PROFILE.phone}</p>
+                <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Phone Number</p>
+                <p className="text-gray-800 font-bold">{USER_PROFILE.phone}</p>
               </div>
             </div>
             <div className="flex items-start space-x-4">
-              <CreditCard className="h-5 w-5 text-gray-400 mt-1" />
+              <div className="p-2 bg-gray-50 rounded-lg">
+                <CreditCard className="h-5 w-5 text-gray-400" />
+              </div>
               <div>
-                <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Primary Account</p>
-                <p className="text-gray-800 font-medium">{USER_PROFILE.accountNumber}</p>
+                <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Primary Account</p>
+                <p className="text-gray-800 font-bold">{USER_PROFILE.accountNumber}</p>
               </div>
             </div>
             <div className="flex items-start space-x-4">
-              <MapPin className="h-5 w-5 text-gray-400 mt-1" />
+              <div className="p-2 bg-gray-50 rounded-lg">
+                <MapPin className="h-5 w-5 text-gray-400" />
+              </div>
               <div>
-                <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Mailing Address</p>
-                <p className="text-gray-800 font-medium">{USER_PROFILE.address}</p>
+                <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Mailing Address</p>
+                <p className="text-gray-800 font-bold leading-tight">{USER_PROFILE.address}</p>
               </div>
             </div>
           </div>
@@ -451,7 +466,7 @@ const AccountDetails = ({ account, onBack }: { account: Account, onBack: () => v
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] font-sans">
+    <div className="min-h-screen bg-[#FDFDFD] font-sans sm:rounded-2xl sm:shadow-xl sm:overflow-hidden">
       <AnimatePresence>
         {selectedTx && (
           <motion.div 
@@ -461,74 +476,74 @@ const AccountDetails = ({ account, onBack }: { account: Account, onBack: () => v
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             className="fixed inset-0 bg-white z-50 flex flex-col"
           >
-            <header className="bg-[#D71E28] text-white py-3 px-4 flex items-center shadow-md">
-              <button onClick={() => setSelectedTx(null)} className="absolute left-4">
+            <header className="bg-[#D71E28] text-white py-4 px-4 flex items-center shadow-md">
+              <button onClick={() => setSelectedTx(null)} className="absolute left-4 p-1 active:bg-white/10 rounded-md transition-colors">
                 <ChevronLeft className="h-6 w-6" />
               </button>
-              <h1 className="w-full text-center text-lg font-serif font-bold tracking-widest">TRANSACTION DETAILS</h1>
+              <h1 className="w-full text-center text-lg font-serif font-bold tracking-widest uppercase">Transaction</h1>
             </header>
             
-            <div className="p-8 text-center border-b border-gray-100">
-              <div className={`w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center ${selectedTx.type === 'credit' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
-                {selectedTx.type === 'credit' ? <ArrowDownLeft className="h-8 w-8" /> : <ArrowUpRight className="h-8 w-8" />}
+            <div className="p-10 text-center border-b border-gray-100">
+              <div className={`w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center ${selectedTx.type === 'credit' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+                {selectedTx.type === 'credit' ? <ArrowDownLeft className="h-10 w-10" /> : <ArrowUpRight className="h-10 w-10" />}
               </div>
-              <h2 className="text-xl font-bold text-gray-900 mb-1">{selectedTx.description}</h2>
-              <p className="text-gray-500 text-sm">{selectedTx.date}</p>
-              <p className={`text-3xl font-bold mt-6 ${selectedTx.type === 'credit' ? 'text-green-700' : 'text-gray-900'}`}>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2 leading-tight uppercase tracking-tight">{selectedTx.description}</h2>
+              <p className="text-gray-500 text-sm font-medium">{selectedTx.date}</p>
+              <p className={`text-4xl font-bold mt-8 ${selectedTx.type === 'credit' ? 'text-green-700' : 'text-gray-900'}`}>
                 {selectedTx.type === 'credit' ? '+' : '-'}${selectedTx.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </p>
             </div>
 
-            <div className="p-6 space-y-6">
-              <div className="flex justify-between items-center py-2 border-b border-gray-50">
-                <span className="text-gray-500 text-sm">Status</span>
-                <span className="text-gray-900 font-semibold capitalize">{selectedTx.status}</span>
+            <div className="p-6 space-y-8">
+              <div className="flex justify-between items-center py-3 border-b border-gray-50">
+                <span className="text-gray-400 text-xs font-bold uppercase tracking-widest">Status</span>
+                <span className="text-gray-900 font-bold capitalize px-3 py-1 bg-gray-100 rounded-full text-xs">{selectedTx.status}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-50">
-                <span className="text-gray-500 text-sm">Transaction ID</span>
-                <span className="text-gray-900 font-mono text-xs">WF-{selectedTx.id}-TXN-2026</span>
+              <div className="flex justify-between items-center py-3 border-b border-gray-50">
+                <span className="text-gray-400 text-xs font-bold uppercase tracking-widest">Transaction ID</span>
+                <span className="text-gray-900 font-mono text-xs font-bold">WF-{selectedTx.id}-TXN-2026</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-50">
-                <span className="text-gray-500 text-sm">Account</span>
-                <span className="text-gray-900 font-semibold">{account.type}</span>
+              <div className="flex justify-between items-center py-3 border-b border-gray-50">
+                <span className="text-gray-400 text-xs font-bold uppercase tracking-widest">Account</span>
+                <span className="text-gray-900 font-bold text-sm">{account.type}</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-gray-50">
-                <span className="text-gray-500 text-sm">Category</span>
-                <span className="text-gray-900 font-semibold">{selectedTx.type === 'credit' ? 'Income' : 'Expense'}</span>
+              <div className="flex justify-between items-center py-3 border-b border-gray-50">
+                <span className="text-gray-400 text-xs font-bold uppercase tracking-widest">Category</span>
+                <span className="text-gray-900 font-bold text-sm">{selectedTx.type === 'credit' ? 'Income' : 'Expense'}</span>
               </div>
             </div>
 
-            <div className="mt-auto p-6">
+            <div className="mt-auto p-6 pb-10">
               <button 
                 onClick={() => setSelectedTx(null)}
-                className="w-full py-4 border-2 border-[#D71E28] text-[#D71E28] font-bold rounded-md"
+                className="w-full py-4 bg-gray-900 text-white font-bold rounded-xl shadow-lg active:scale-[0.98] transition-transform"
               >
-                Close
+                Done
               </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <header className="bg-[#D71E28] text-white py-3 px-4 flex items-center sticky top-0 z-10 shadow-md">
-        <button onClick={onBack} className="absolute left-4">
+      <header className="bg-[#D71E28] text-white py-4 px-4 flex items-center sticky top-0 z-30 shadow-md">
+        <button onClick={onBack} className="absolute left-4 p-1 active:bg-white/10 rounded-md transition-colors">
           <ChevronLeft className="h-6 w-6" />
         </button>
         <h1 className="w-full text-center text-lg font-serif font-bold tracking-widest">ACCOUNT DETAILS</h1>
       </header>
 
-      <div className="p-6 bg-white border-b border-gray-200">
-        <h2 className="text-[#8C1B1B] font-bold text-xl uppercase tracking-wide">{account.type}</h2>
-        <p className="text-gray-500 text-sm">{account.number}</p>
-        <div className="mt-6">
-          <p className="text-gray-500 text-xs uppercase font-bold tracking-wider">Available Balance</p>
-          <p className="text-4xl font-bold text-gray-900 mt-1">${account.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+      <div className="p-8 bg-white border-b border-gray-200">
+        <h2 className="text-[#8C1B1B] font-bold text-2xl uppercase tracking-wide leading-tight">{account.type}</h2>
+        <p className="text-gray-500 text-sm font-medium mt-1">{account.number}</p>
+        <div className="mt-8">
+          <p className="text-gray-400 text-[10px] uppercase font-bold tracking-widest">Available Balance</p>
+          <p className="text-5xl font-bold text-gray-900 mt-2 tracking-tighter">${account.balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
         </div>
       </div>
 
       <div className="mt-4">
-        <div className="px-6 py-3 bg-gray-50 border-y border-gray-200">
-          <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest">Transaction History</h3>
+        <div className="px-8 py-4 bg-gray-50 border-y border-gray-100">
+          <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Transaction History</h3>
         </div>
         <div className="bg-white">
           {account.transactions.length > 0 ? (
@@ -536,15 +551,15 @@ const AccountDetails = ({ account, onBack }: { account: Account, onBack: () => v
               <button 
                 key={tx.id} 
                 onClick={() => setSelectedTx(tx)}
-                className="w-full px-6 py-4 border-b border-gray-100 flex justify-between items-center text-left active:bg-gray-50 transition-colors"
+                className="w-full px-8 py-5 border-b border-gray-50 flex justify-between items-center text-left active:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center space-x-4">
-                  <div className={`p-2 rounded-full ${tx.type === 'credit' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${tx.type === 'credit' ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-400'}`}>
                     {tx.type === 'credit' ? <ArrowDownLeft className="h-5 w-5" /> : <ArrowUpRight className="h-5 w-5" />}
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm leading-tight">{tx.description}</p>
-                    <p className="text-xs text-gray-500">{tx.date}</p>
+                    <p className="font-bold text-gray-800 text-xs leading-tight uppercase tracking-tight">{tx.description}</p>
+                    <p className="text-[10px] text-gray-400 font-medium mt-1 uppercase tracking-wider">{tx.date}</p>
                   </div>
                 </div>
                 <p className={`font-bold text-sm ${tx.type === 'credit' ? 'text-green-600' : 'text-gray-900'}`}>
@@ -589,7 +604,7 @@ const TransferFlow = ({ accounts, onComplete, onCancel }: { accounts: Account[],
 
   if (step === 'success') {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6 font-sans">
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6 font-sans sm:rounded-2xl sm:shadow-xl sm:overflow-hidden">
         <div className="w-full max-w-md bg-white shadow-xl rounded-lg overflow-hidden border border-gray-200">
           <div className="bg-[#D71E28] p-6 text-center text-white">
             <h2 className="text-xl font-serif font-bold tracking-widest">WELLS FARGO</h2>
@@ -652,35 +667,35 @@ const TransferFlow = ({ accounts, onComplete, onCancel }: { accounts: Account[],
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] font-sans">
-      <header className="bg-[#D71E28] text-white py-3 px-4 flex items-center sticky top-0 z-10 shadow-md">
-        <button onClick={onCancel} className="absolute left-4">
+    <div className="min-h-screen bg-[#FDFDFD] font-sans sm:rounded-2xl sm:shadow-xl sm:overflow-hidden">
+      <header className="bg-[#D71E28] text-white py-4 px-4 flex items-center sticky top-0 z-30 shadow-md">
+        <button onClick={onCancel} className="absolute left-4 p-1 active:bg-white/10 rounded-md transition-colors">
           <ChevronLeft className="h-6 w-6" />
         </button>
         <h1 className="w-full text-center text-lg font-serif font-bold tracking-widest">
-          {step === 'details' ? 'TRANSFER MONEY' : 'VERIFICATION'}
+          {step === 'details' ? 'TRANSFER' : 'VERIFY'}
         </h1>
       </header>
 
-      <div className="p-6">
+      <div className="p-8">
         {step === 'details' ? (
-          <form onSubmit={handleDetailsSubmit} className="space-y-6">
+          <form onSubmit={handleDetailsSubmit} className="space-y-8">
             <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">From Account</label>
+              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">From Account</label>
               <select 
-                className="w-full p-3 border border-gray-300 rounded-md bg-white"
+                className="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 font-bold text-gray-800 focus:ring-2 focus:ring-red-100 outline-none transition-all"
                 value={fromAccount}
                 onChange={(e) => setFromAccount(e.target.value)}
               >
                 {accounts.map(a => (
-                  <option key={a.id} value={a.id}>{a.type} ({a.number})</option>
+                  <option key={a.id} value={a.id}>{a.type}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Recipient Bank</label>
+              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Recipient Bank</label>
               <select 
-                className="w-full p-3 border border-gray-300 rounded-md bg-white"
+                className="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 font-bold text-gray-800 focus:ring-2 focus:ring-red-100 outline-none transition-all"
                 value={selectedBank}
                 onChange={(e) => setSelectedBank(e.target.value)}
               >
@@ -690,31 +705,31 @@ const TransferFlow = ({ accounts, onComplete, onCancel }: { accounts: Account[],
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">To Account / Recipient</label>
+              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">To Account / Recipient</label>
               <input 
                 type="text" 
                 placeholder="Account or Routing Number"
-                className="w-full p-3 border border-gray-300 rounded-md"
+                className="w-full p-4 border border-gray-200 rounded-xl bg-white font-bold text-gray-800 focus:ring-2 focus:ring-red-100 outline-none transition-all"
                 value={toAccount}
                 onChange={(e) => setToAccount(e.target.value)}
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Amount</label>
+              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Amount</label>
               <div className="relative">
-                <span className="absolute left-3 top-3 text-gray-500">$</span>
+                <span className="absolute left-4 top-4 text-gray-400 font-bold">$</span>
                 <input 
                   type="number" 
                   placeholder="0.00"
-                  className="w-full p-3 pl-8 border border-gray-300 rounded-md"
+                  className="w-full p-4 pl-10 border border-gray-200 rounded-xl bg-white font-bold text-gray-800 text-2xl focus:ring-2 focus:ring-red-100 outline-none transition-all"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   required
                 />
               </div>
             </div>
-            <button type="submit" className="w-full py-3 bg-[#D71E28] text-white rounded-md font-bold mt-8">
+            <button type="submit" className="w-full py-5 bg-[#D71E28] text-white rounded-xl font-bold text-lg shadow-xl active:scale-[0.98] transition-all mt-10">
               Continue
             </button>
           </form>
@@ -783,7 +798,7 @@ const DepositFlow = ({ accounts, onComplete, onCancel }: { accounts: Account[], 
 
   if (step === 'success') {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center sm:rounded-2xl sm:shadow-xl sm:overflow-hidden">
         <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-green-50 p-6 rounded-full mb-6">
           <CheckCircle2 className="h-16 w-16 text-green-600" />
         </motion.div>
@@ -795,39 +810,39 @@ const DepositFlow = ({ accounts, onComplete, onCancel }: { accounts: Account[], 
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] font-sans">
-      <header className="bg-[#D71E28] text-white py-3 px-4 flex items-center sticky top-0 z-10 shadow-md">
-        <button onClick={onCancel} className="absolute left-4"><ChevronLeft className="h-6 w-6" /></button>
+    <div className="min-h-screen bg-[#FDFDFD] font-sans sm:rounded-2xl sm:shadow-xl sm:overflow-hidden">
+      <header className="bg-[#D71E28] text-white py-4 px-4 flex items-center sticky top-0 z-30 shadow-md">
+        <button onClick={onCancel} className="absolute left-4 p-1 active:bg-white/10 rounded-md transition-colors"><ChevronLeft className="h-6 w-6" /></button>
         <h1 className="w-full text-center text-lg font-serif font-bold tracking-widest">
-          {step === 'details' ? 'DEPOSIT CHECK' : 'VERIFICATION'}
+          {step === 'details' ? 'DEPOSIT' : 'VERIFY'}
         </h1>
       </header>
 
-      <div className="p-6">
+      <div className="p-8">
         {step === 'details' ? (
-          <form onSubmit={handleDetailsSubmit} className="space-y-6">
-            <div className="bg-gray-50 p-8 border-2 border-dashed border-gray-300 rounded-lg text-center">
-              <PlusCircle className="h-12 w-12 text-gray-300 mx-auto mb-2" />
-              <p className="text-sm font-bold text-gray-500">Tap to take a photo of the front of your check</p>
+          <form onSubmit={handleDetailsSubmit} className="space-y-8">
+            <div className="bg-gray-50 p-10 border-2 border-dashed border-gray-200 rounded-2xl text-center active:bg-gray-100 transition-colors">
+              <PlusCircle className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Front of Check</p>
             </div>
-            <div className="bg-gray-50 p-8 border-2 border-dashed border-gray-300 rounded-lg text-center">
-              <PlusCircle className="h-12 w-12 text-gray-300 mx-auto mb-2" />
-              <p className="text-sm font-bold text-gray-500">Tap to take a photo of the back of your check</p>
+            <div className="bg-gray-50 p-10 border-2 border-dashed border-gray-200 rounded-2xl text-center active:bg-gray-100 transition-colors">
+              <PlusCircle className="h-12 w-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Back of Check</p>
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Deposit To</label>
-              <select className="w-full p-3 border border-gray-300 rounded-md bg-white" value={toAccount} onChange={(e) => setToAccount(e.target.value)}>
-                {accounts.map(a => <option key={a.id} value={a.id}>{a.type} ({a.number})</option>)}
+              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Deposit To</label>
+              <select className="w-full p-4 border border-gray-200 rounded-xl bg-gray-50 font-bold text-gray-800 focus:ring-2 focus:ring-red-100 outline-none transition-all" value={toAccount} onChange={(e) => setToAccount(e.target.value)}>
+                {accounts.map(a => <option key={a.id} value={a.id}>{a.type}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Amount</label>
+              <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Amount</label>
               <div className="relative">
-                <span className="absolute left-3 top-3 text-gray-500">$</span>
-                <input type="number" placeholder="0.00" className="w-full p-3 pl-8 border border-gray-300 rounded-md" value={amount} onChange={(e) => setAmount(e.target.value)} required />
+                <span className="absolute left-4 top-4 text-gray-400 font-bold">$</span>
+                <input type="number" placeholder="0.00" className="w-full p-4 pl-10 border border-gray-200 rounded-xl bg-white font-bold text-gray-800 text-2xl focus:ring-2 focus:ring-red-100 outline-none transition-all" value={amount} onChange={(e) => setAmount(e.target.value)} required />
               </div>
             </div>
-            <button type="submit" className="w-full py-3 bg-[#D71E28] text-white rounded-md font-bold mt-8">Continue</button>
+            <button type="submit" className="w-full py-5 bg-[#D71E28] text-white rounded-xl font-bold text-lg shadow-xl active:scale-[0.98] transition-all mt-10">Continue</button>
           </form>
         ) : (
           <form onSubmit={handleVerify} className="space-y-6 text-center">
@@ -861,83 +876,114 @@ export default function App() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <AnimatePresence mode="wait">
-        {view === 'login' && (
-          <motion.div key="login" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <LoginPage onLogin={() => setView('home')} />
-          </motion.div>
-        )}
-        {view === 'home' && (
-          <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <HomePage account={accounts[0]} onMenuClick={() => setView('menu')} onTransferClick={() => setView('transfer')} />
-          </motion.div>
-        )}
-        {view === 'accounts' && (
-          <motion.div key="accounts" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <AccountsPage 
-              accounts={accounts} 
-              onSelectAccount={(a) => { setSelectedAccount(a); setView('accountDetails'); }}
-            />
-          </motion.div>
-        )}
-        {view === 'accountDetails' && selectedAccount && (
-          <motion.div key="details" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}>
-            <AccountDetails account={selectedAccount} onBack={() => setView('accounts')} />
-          </motion.div>
-        )}
-        {view === 'transfer' && (
-          <motion.div key="transfer" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}>
-            <TransferFlow accounts={accounts} onComplete={handleTransferComplete} onCancel={() => setView('home')} />
-          </motion.div>
-        )}
-        {view === 'deposit' && (
-          <motion.div key="deposit" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}>
-            <DepositFlow accounts={accounts} onComplete={handleDepositComplete} onCancel={() => setView('home')} />
-          </motion.div>
-        )}
-        {view === 'menu' && (
-          <motion.div key="menu" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}>
-            <MenuPage onNavigate={(v) => setView(v)} onLogout={() => setView('login')} />
-          </motion.div>
-        )}
-        {view === 'profile' && (
-          <motion.div key="profile" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }}>
-            <ProfilePage onBack={() => setView('menu')} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Bottom Navigation */}
+    <div className="bg-gray-100 min-h-screen flex flex-col">
+      {/* Desktop Navigation */}
       {view !== 'login' && (
-        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center py-2 px-1 z-20">
-          <button onClick={() => setView('home')} className={`flex flex-col items-center space-y-1 ${view === 'home' ? 'text-[#D71E28]' : 'text-gray-500'}`}>
-            <Home className="h-6 w-6" />
-            <span className="text-[10px] font-medium">Home</span>
-          </button>
-          <button onClick={() => setView('accounts')} className={`flex flex-col items-center space-y-1 ${view === 'accounts' ? 'text-[#D71E28]' : 'text-gray-500'}`}>
-            <CreditCard className="h-6 w-6" />
-            <span className="text-[10px] font-medium">Accounts</span>
-          </button>
-          <button onClick={() => setView('transfer')} className={`flex flex-col items-center space-y-1 ${view === 'transfer' ? 'text-[#D71E28]' : 'text-gray-500'}`}>
-            <div className="relative">
-              <ArrowRightLeft className="h-6 w-6" />
-              <div className="absolute -top-1 -right-1 bg-white rounded-full p-0.5">
-                <span className="text-[8px] font-bold">$</span>
+        <nav className="hidden sm:block bg-[#D71E28] text-white shadow-md z-50 sticky top-0">
+          <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+            <div className="flex items-center space-x-8">
+              <h1 className="text-xl font-serif font-bold tracking-widest">WELLS FARGO</h1>
+              <div className="flex space-x-6">
+                <button onClick={() => setView('home')} className={`text-sm font-bold uppercase tracking-wide hover:text-white/80 transition-colors ${view === 'home' ? 'border-b-2 border-white pb-1' : ''}`}>Home</button>
+                <button onClick={() => setView('accounts')} className={`text-sm font-bold uppercase tracking-wide hover:text-white/80 transition-colors ${view === 'accounts' ? 'border-b-2 border-white pb-1' : ''}`}>Accounts</button>
+                <button onClick={() => setView('transfer')} className={`text-sm font-bold uppercase tracking-wide hover:text-white/80 transition-colors ${view === 'transfer' ? 'border-b-2 border-white pb-1' : ''}`}>Transfer</button>
+                <button onClick={() => setView('deposit')} className={`text-sm font-bold uppercase tracking-wide hover:text-white/80 transition-colors ${view === 'deposit' ? 'border-b-2 border-white pb-1' : ''}`}>Deposit</button>
               </div>
             </div>
-            <span className="text-[10px] font-medium">Transfer</span>
-          </button>
-          <button onClick={() => setView('deposit')} className={`flex flex-col items-center space-y-1 ${view === 'deposit' ? 'text-[#D71E28]' : 'text-gray-500'}`}>
-            <ArrowUpFromLine className="h-6 w-6" />
-            <span className="text-[10px] font-medium">Deposit</span>
-          </button>
-          <button onClick={() => setView('menu')} className={`flex flex-col items-center space-y-1 ${view === 'menu' ? 'text-[#D71E28]' : 'text-gray-500'}`}>
-            <Menu className="h-6 w-6" />
-            <span className="text-[10px] font-medium">Menu</span>
-          </button>
+            <div className="flex items-center space-x-4">
+              <button onClick={() => setView('profile')} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                <User className="h-5 w-5" />
+              </button>
+              <button onClick={() => setView('menu')} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                <Menu className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
         </nav>
       )}
+
+      <div className="flex-1 flex flex-col relative overflow-x-hidden">
+        <div className="flex-1 overflow-y-auto pb-24 sm:pb-12 sm:px-6 sm:py-8">
+          <AnimatePresence mode="wait">
+            {view === 'login' && (
+              <motion.div key="login" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="min-h-screen">
+                <LoginPage onLogin={() => setView('home')} />
+              </motion.div>
+            )}
+            {view === 'home' && (
+              <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-w-6xl mx-auto w-full bg-white min-h-screen shadow-sm">
+                <HomePage account={accounts[0]} onMenuClick={() => setView('menu')} onTransferClick={() => setView('transfer')} />
+              </motion.div>
+            )}
+            {view === 'accounts' && (
+              <motion.div key="accounts" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="max-w-6xl mx-auto w-full bg-white min-h-screen shadow-sm">
+                <AccountsPage 
+                  accounts={accounts} 
+                  onSelectAccount={(a) => { setSelectedAccount(a); setView('accountDetails'); }}
+                />
+              </motion.div>
+            )}
+            {view === 'accountDetails' && selectedAccount && (
+              <motion.div key="details" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }} className="max-w-6xl mx-auto w-full bg-white min-h-screen shadow-sm">
+                <AccountDetails account={selectedAccount} onBack={() => setView('accounts')} />
+              </motion.div>
+            )}
+            {view === 'transfer' && (
+              <motion.div key="transfer" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }} className="max-w-6xl mx-auto w-full bg-white min-h-screen shadow-sm">
+                <TransferFlow accounts={accounts} onComplete={handleTransferComplete} onCancel={() => setView('home')} />
+              </motion.div>
+            )}
+            {view === 'deposit' && (
+              <motion.div key="deposit" initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }} className="max-w-6xl mx-auto w-full bg-white min-h-screen shadow-sm">
+                <DepositFlow accounts={accounts} onComplete={handleDepositComplete} onCancel={() => setView('home')} />
+              </motion.div>
+            )}
+            {view === 'menu' && (
+              <motion.div key="menu" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }} className="max-w-6xl mx-auto w-full bg-white min-h-screen shadow-sm">
+                <MenuPage onNavigate={(v) => setView(v)} onLogout={() => setView('login')} />
+              </motion.div>
+            )}
+            {view === 'profile' && (
+              <motion.div key="profile" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }} className="max-w-6xl mx-auto w-full bg-white min-h-screen shadow-sm">
+                <ProfilePage onBack={() => setView('menu')} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Bottom Navigation (Mobile Only) */}
+        {view !== 'login' && (
+          <nav className="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+            <div className="max-w-6xl mx-auto flex justify-around items-center pt-3 pb-6 px-1">
+              <button onClick={() => setView('home')} className={`flex flex-col items-center space-y-1 transition-colors ${view === 'home' ? 'text-[#D71E28]' : 'text-gray-400'}`}>
+                <Home className="h-6 w-6" />
+                <span className="text-[10px] font-bold">Home</span>
+              </button>
+              <button onClick={() => setView('accounts')} className={`flex flex-col items-center space-y-1 transition-colors ${view === 'accounts' ? 'text-[#D71E28]' : 'text-gray-400'}`}>
+                <CreditCard className="h-6 w-6" />
+                <span className="text-[10px] font-bold">Accounts</span>
+              </button>
+              <button onClick={() => setView('transfer')} className={`flex flex-col items-center space-y-1 transition-colors ${view === 'transfer' ? 'text-[#D71E28]' : 'text-gray-400'}`}>
+                <div className="relative">
+                  <ArrowRightLeft className="h-6 w-6" />
+                  <div className="absolute -top-1 -right-1 bg-white rounded-full p-0.5">
+                    <span className="text-[8px] font-bold">$</span>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold">Transfer</span>
+              </button>
+              <button onClick={() => setView('deposit')} className={`flex flex-col items-center space-y-1 transition-colors ${view === 'deposit' ? 'text-[#D71E28]' : 'text-gray-400'}`}>
+                <ArrowUpFromLine className="h-6 w-6" />
+                <span className="text-[10px] font-bold">Deposit</span>
+              </button>
+              <button onClick={() => setView('menu')} className={`flex flex-col items-center space-y-1 transition-colors ${view === 'menu' ? 'text-[#D71E28]' : 'text-gray-400'}`}>
+                <Menu className="h-6 w-6" />
+                <span className="text-[10px] font-bold">Menu</span>
+              </button>
+            </div>
+          </nav>
+        )}
+      </div>
     </div>
   );
 }
